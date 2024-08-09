@@ -4,8 +4,8 @@ import azure.functions as func
 import os
 import json
 
-def main(req: func.HttpRequest) -> func.HttpResponse:
-    logging.info('Python HTTP trigger function processed a request. test')
+def main(req: func.HttpRequest, res: func.Out[str]) -> func.HttpResponse:
+    logging.info('Python HTTP trigger function processed a request.')
 
     try:
         req_body = req.get_json()
@@ -37,12 +37,14 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         cur.execute("INSERT INTO details (name, email) VALUES (%s, %s)", (name, email))
         conn.commit()
         cur.close()
+        res.set("Record added successfully")
         return func.HttpResponse(
             "Record added successfully",
             status_code=200
         )
     except Exception as e:
         logging.error(f"Error: {e}")
+        res.set("Failed to add record")
         return func.HttpResponse(
             "Failed to add record",
             status_code=500
