@@ -4,15 +4,14 @@ import azure.functions as func
 import os
 import json
 
-def main(req: func.HttpRequest, res: func.HttpResponse) -> func.HttpResponse:
-    logging.info('Python HTTP trigger function processed a request.')
+def main(req: func.HttpRequest) -> func.HttpResponse:
+    logging.info('Python HTTP trigger function processed a request. test')
 
     try:
         req_body = req.get_json()
-    except ValueError as e:
-        logging.error(f"JSON parsing error: {e}")
+    except ValueError:
         return func.HttpResponse(
-            "Invalid JSON input. Please provide valid JSON data.",
+            "Invalid input",
             status_code=400
         )
 
@@ -21,7 +20,7 @@ def main(req: func.HttpRequest, res: func.HttpResponse) -> func.HttpResponse:
 
     if not name or not email:
         return func.HttpResponse(
-            "Name and email are required.",
+            "Name and email are required",
             status_code=400
         )
 
@@ -38,25 +37,16 @@ def main(req: func.HttpRequest, res: func.HttpResponse) -> func.HttpResponse:
         cur.execute("INSERT INTO details (name, email) VALUES (%s, %s)", (name, email))
         conn.commit()
         cur.close()
-
-        res = func.HttpResponse(
-            "Record added successfully.",
+        return func.HttpResponse(
+            "Record added successfully",
             status_code=200
         )
-    except psycopg2.Error as db_error:
-        logging.error(f"Database error: {db_error}")
-        res = func.HttpResponse(
-            "Failed to add record to the database.",
-            status_code=500
-        )
     except Exception as e:
-        logging.error(f"Unexpected error: {e}")
-        res = func.HttpResponse(
-            "An unexpected error occurred.",
+        logging.error(f"Error: {e}")
+        return func.HttpResponse(
+            "Failed to add record",
             status_code=500
         )
     finally:
         if conn:
             conn.close()
-
-    return res
