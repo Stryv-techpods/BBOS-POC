@@ -95,3 +95,20 @@
         async function submitForm() {
             const name = document.getElementById('name').value;
             const email = document.getElementById
+            const response = await fetch('https://<YOUR_AZURE_FUNCTION_URL>/api/AddDetails', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name: name, email: email })
+            });
+            
+            if (response.ok) {
+                alert('Details submitted successfully!');
+            } else {
+                alert('Failed to submit details');
+            }
+        }
+    </script>
+</body>
+</html>
