@@ -1,5 +1,6 @@
 import logging
 import psycopg2
+import json
 import azure.functions as func
 import os
 
