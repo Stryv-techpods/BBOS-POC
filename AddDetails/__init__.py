@@ -27,11 +27,11 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     conn = None
     try:
         conn = psycopg2.connect(
-            dbname=os.getenv('POSTGRES_DB'),
-            user=os.getenv('POSTGRES_USER'),
-            password=os.getenv('POSTGRES_PASSWORD'),
-            host=os.getenv('POSTGRES_HOST'),
-            port=os.getenv('POSTGRES_PORT')
+            dbname="POSTGRES_DB",
+            user="vishnu-madle",
+            password="vishnu@123",
+            host="POSTGRES_HOST",
+            port="POSTGRES_PORT"
         )
         cur = conn.cursor()
         cur.execute("INSERT INTO details (name, email) VALUES (%s, %s)", (name, email))
