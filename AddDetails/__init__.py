@@ -32,11 +32,11 @@ def main(req: func.HttpRequest, res: func.Out[func.HttpResponse]) -> None:
     try:
         # Connect to PostgreSQL
         conn = psycopg2.connect(
-            dbname=os.getenv('POSTGRES_DB'),
-            user=os.getenv('POSTGRES_USER'),
-            password=os.getenv('POSTGRES_PASSWORD'),
-            host=os.getenv('POSTGRES_HOST'),
-            port=os.getenv('POSTGRES_PORT')
+            dbname="postgres",
+            user="vishnu-madle",
+            password="vishnu@123",
+            host="bbos-database.postgres.database.azure.com",
+            port="5432"
         )
         cur = conn.cursor()
         # Execute SQL command
