@@ -33,7 +33,7 @@ def main(req: func.HttpRequest, res: func.Out[func.HttpResponse]) -> None:
         # Connect to PostgreSQL
         conn = psycopg2.connect(
             dbname="postgres",
-            user="vishnu-madle",
+            user="postgres",
             password="vishnu@123",
             host="bbos-database.postgres.database.azure.com",
             port="5432"
